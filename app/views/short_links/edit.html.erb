@@ -1,0 +1,6 @@
+<%= form_for @short_link do |f| %>
+  Original URL:  <%= @short_link.original_url %><br>
+  Views:         <%= @short_link.view_count %><br>
+  Expired:       <%= f.check_box :expired %><br><br>
+  <%= f.submit 'Save' %>
+<% end %>

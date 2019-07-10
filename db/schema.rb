@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190419191216) do
+ActiveRecord::Schema.define(version: 2019_07_09_225601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(version: 20190419191216) do
     t.integer "view_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "short_url"
+    t.boolean "expired"
+    t.string "uuid"
+    t.index ["original_url"], name: "index_short_links_on_original_url"
+    t.index ["short_url"], name: "index_short_links_on_short_url"
+    t.index ["uuid"], name: "index_short_links_on_uuid"
   end
 
 end

@@ -1,7 +1,8 @@
 class ShortLinksController < ApplicationController
-  before_action :fetch_short_link, only: [:index, :show, :edit, :update]
+  before_action :fetch_short_link, only: [:show, :edit, :update]
 
   def index
+    @short_link = ShortLink.find_by_short_url(params[:short_url])
     if @short_link.nil? || @short_link&.expired
       render file: "#{Rails.root}/public/404.html", status: 404
     else
@@ -15,9 +16,9 @@ class ShortLinksController < ApplicationController
   end
 
   def create
-    @short_link = ShortLink.new(original_url: params[:short_link][:original_url])
     dup_link = ShortLink.find_by_original_url(params[:short_link][:original_url])
     if dup_link.nil?
+      @short_link = ShortLink.new(original_url: params[:short_link][:original_url])
       if @short_link.save
         redirect_to @short_link
       else
@@ -51,8 +52,7 @@ class ShortLinksController < ApplicationController
   private
 
   def fetch_short_link
-    @short_link = ShortLink.find_by_id(params[:id]) || ShortLink.find_by_uuid(params[:id]) ||
-        ShortLink.find_by_short_url(params[:short_url])
+    @short_link = ShortLink.find_by_id(params[:id]) || ShortLink.find_by_uuid(params[:id])
   end
 
   def url_params

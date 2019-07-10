@@ -73,10 +73,6 @@ RSpec.describe ShortLinksController, type: :controller do
         expect(response.status).to eq(302)
       end
 
-      # it 'redirects to correct path' do
-      #   expect(response).to redirect_to short_link_path(ShortLink.where(original_url: url).first.id)
-      # end
-
       it 'creates a short link record' do
         expect(ShortLink.where(original_url: url).count).to eq 1
       end
